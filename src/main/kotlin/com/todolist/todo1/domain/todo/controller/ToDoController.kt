@@ -31,7 +31,8 @@ class ToDoController(
     }
     @DeleteMapping("/{todoId}")
     fun deleteToDo(@PathVariable todoId : Long) : ResponseEntity<Unit> {
-        return ResponseEntity.status(HttpStatus.OK).build()
+        toDoService.deleteToDo(todoId)
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
     }
 
 }
