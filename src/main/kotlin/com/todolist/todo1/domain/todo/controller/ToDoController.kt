@@ -1,8 +1,6 @@
 package com.todolist.todo1.domain.todo.controller
 
-import com.todolist.todo1.domain.todo.dto.CreateToDoRequest
-import com.todolist.todo1.domain.todo.dto.ToDoResponse
-import com.todolist.todo1.domain.todo.dto.UpdateToDoRequest
+import com.todolist.todo1.domain.todo.dto.*
 import com.todolist.todo1.domain.todo.service.ToDoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -31,8 +29,7 @@ class ToDoController(
     }
     @DeleteMapping("/{todoId}")
     fun deleteToDo(@PathVariable todoId : Long) : ResponseEntity<Unit> {
-        toDoService.deleteToDo(todoId)
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(toDoService.deleteToDo(todoId))
     }
 
 }

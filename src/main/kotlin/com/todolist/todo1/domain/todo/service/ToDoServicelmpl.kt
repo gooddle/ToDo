@@ -1,9 +1,7 @@
 package com.todolist.todo1.domain.todo.service
 
 import com.todolist.todo1.domain.exception.ModelNotFoundException
-import com.todolist.todo1.domain.todo.dto.CreateToDoRequest
-import com.todolist.todo1.domain.todo.dto.ToDoResponse
-import com.todolist.todo1.domain.todo.dto.UpdateToDoRequest
+import com.todolist.todo1.domain.todo.dto.*
 import com.todolist.todo1.domain.todo.model.toResponse
 import com.todolist.todo1.domain.todo.repository.ToDoRepository
 import org.springframework.data.repository.findByIdOrNull
@@ -45,7 +43,7 @@ class ToDoServicelmpl(
 
     override fun deleteToDo(todoId: Long) {
       val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
-        toDoRepository.delete(todo)
+          toDoRepository.delete(todo)
     }
 
 }
