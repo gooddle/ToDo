@@ -1,4 +1,7 @@
 package com.todolist.todo1.domain.todo.model
+
+
+import com.todolist.todo1.domain.comment.model.Comment
 import com.todolist.todo1.domain.todo.dto.ToDoResponse
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -6,7 +9,7 @@ import java.time.LocalDateTime
 @Entity
 @Table(name = "todolist")
 class ToDo(
-    @Column(name ="title",nullable = false)
+    @Column(name ="title", nullable = false)
     var title: String,
 
     @Column(name = "name", nullable = false)
@@ -16,15 +19,28 @@ class ToDo(
     var description: String,
 
     @Column(name = "date", nullable = false)
-    val date: LocalDateTime = LocalDateTime.now()
+    val date: LocalDateTime = LocalDateTime.now(),
 
-    ){
+    @Column(name = "status", nullable = false)
+    var status : Boolean,
+
+    @OneToMany(mappedBy = "todo", cascade = [(CascadeType.ALL)],orphanRemoval = true,fetch = FetchType.LAZY)
+    var comments: MutableSet<Comment> = mutableSetOf(),
+
+
+    ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
-
+    fun addComment(comment: Comment) {
+        comments.add(comment)
     }
+    fun deleteComment(comment: Comment) {
+        comments.remove(comment)
+    }
+
+}
 
 
 fun ToDo.toResponse(): ToDoResponse {
@@ -34,5 +50,6 @@ fun ToDo.toResponse(): ToDoResponse {
         name= name,
         description= description,
         date = date,
+        status = status
     )
 }

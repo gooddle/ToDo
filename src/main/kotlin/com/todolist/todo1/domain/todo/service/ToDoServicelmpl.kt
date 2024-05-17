@@ -23,13 +23,15 @@ class ToDoServicelmpl(
     }
 
     override fun createNewToDo(request: CreateToDoRequest): ToDoResponse {
-      return toDoRepository.save(
+        return toDoRepository.save(
           ToDo(
               title = request.title,
               description =  request.description,
               name = request.name,
+              status = false
           )
       ).toResponse()
+
     }
 
     override fun updateToDo(todoId: Long, request: UpdateToDoRequest): ToDoResponse {
@@ -38,6 +40,13 @@ class ToDoServicelmpl(
 
         todo.title = title
         todo.description = description
+
+        when(request.status) {
+            true -> todo.status = true
+            false -> todo.status = false
+        }
+
+
         return toDoRepository.save(todo).toResponse()
     }
 
