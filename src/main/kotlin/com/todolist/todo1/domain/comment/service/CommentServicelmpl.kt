@@ -3,6 +3,7 @@ package com.todolist.todo1.domain.comment.service
 
 import com.todolist.todo1.domain.comment.dto.CommentResponse
 import com.todolist.todo1.domain.comment.dto.CreateCommentRequest
+import com.todolist.todo1.domain.comment.dto.DeleteCommentRequest
 import com.todolist.todo1.domain.comment.dto.UpdateCommentRequest
 import com.todolist.todo1.domain.comment.model.Comment
 import com.todolist.todo1.domain.comment.model.toResponse
@@ -59,9 +60,13 @@ class CommentServicelmpl(
 
     }
     @Transactional
-    override fun getDeleteComment(todoId: Long, commentId: Long) {
+    override fun getDeleteComment(todoId: Long, commentId: Long,request: DeleteCommentRequest) {
       val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("ToDo",todoId)
       val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("Comment",commentId)
+      val password = request.password
+      if(password != comment.password){
+          throw ModelNotFoundException("Comment",todoId)
+      }
         todo.deleteComment(comment)
         toDoRepository.save(todo)
     }

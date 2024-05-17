@@ -2,6 +2,7 @@ package com.todolist.todo1.domain.comment.controller
 
 import com.todolist.todo1.domain.comment.dto.CommentResponse
 import com.todolist.todo1.domain.comment.dto.CreateCommentRequest
+import com.todolist.todo1.domain.comment.dto.DeleteCommentRequest
 import com.todolist.todo1.domain.comment.dto.UpdateCommentRequest
 import com.todolist.todo1.domain.comment.service.CommentService
 import org.springframework.http.HttpStatus
@@ -35,8 +36,8 @@ class CommentController(
 
     }
     @DeleteMapping("/{commentId}")
-    fun deleteComment(@PathVariable todoId: Long,@PathVariable commentId: Long) : ResponseEntity<Unit> {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(commentService.getDeleteComment(todoId, commentId))
+    fun deleteComment(@PathVariable todoId: Long,@PathVariable commentId: Long,@RequestBody deleteCommentRequest: DeleteCommentRequest) : ResponseEntity<Unit> {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(commentService.getDeleteComment(todoId, commentId,deleteCommentRequest))
 
     }
 
