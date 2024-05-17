@@ -30,7 +30,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
-//	implementation("com.h2database:h2")
+	implementation("com.h2database:h2")
 	runtimeOnly("org.postgresql:postgresql")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
