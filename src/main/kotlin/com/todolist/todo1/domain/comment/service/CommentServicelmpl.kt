@@ -50,7 +50,7 @@ class CommentServicelmpl(
         val(name,description)=request
         val password = request.password
         if(password != comment.password || name != comment.name){
-            throw ModelNotFoundException("Comment",todoId)
+            throw IllegalStateException("아이디 혹은 비밀번호가 일치하지 않습니다.")
         }
 
         comment.name = name
@@ -65,7 +65,7 @@ class CommentServicelmpl(
       val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("Comment",commentId)
       val (passwords,names) = request
         if(passwords != comment.password|| names != comment.name){
-          throw ModelNotFoundException("Comment",todoId)
+          throw IllegalStateException("아이디 혹은 비밀번호가 일치하지 않습니다.")
       }
         todo.deleteComment(comment)
         toDoRepository.save(todo)
