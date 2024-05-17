@@ -63,8 +63,8 @@ class CommentServicelmpl(
     override fun getDeleteComment(todoId: Long, commentId: Long,request: DeleteCommentRequest) {
       val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("ToDo",todoId)
       val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("Comment",commentId)
-      val password = request.password
-      if(password != comment.password){
+      val (passwords,names) = request
+        if(passwords != comment.password|| names != comment.name){
           throw ModelNotFoundException("Comment",todoId)
       }
         todo.deleteComment(comment)
