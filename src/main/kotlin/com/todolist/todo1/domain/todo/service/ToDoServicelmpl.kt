@@ -8,6 +8,7 @@ import org.springframework.data.repository.findByIdOrNull
 import com.todolist.todo1.domain.todo.model.ToDo
 import jakarta.transaction.Transactional
 
+
 import org.springframework.stereotype.Service
 
 
@@ -16,16 +17,22 @@ class ToDoServicelmpl(
  private val toDoRepository: ToDoRepository
 ):ToDoService{
     override fun getAllToDoList(orderBy : String?,name : String?): List<ToDoResponse> {
+//        val todoLists = toDoRepository.findAll()
+//        if(name.isNullOrEmpty()){
+//            toDoRepository.findAll()
+//        }else{
+//            toDoRepository.findAll().filter { it.name==name }
+//        }
 
         val toDoLists = if(name.isNullOrEmpty()){
-           toDoRepository.findAll()
+           toDoRepository.findAll().map{it.toResponse()}
        }else{
-           toDoRepository.findAll().filter { it.name == name }
+           toDoRepository.findAll().filter { it.name == name }.map{it.toResponse()}
        }
       return when(orderBy){
-        "1",null -> toDoLists.sortedBy { it.date }.map { it.toResponse() }
-        "2" -> toDoLists.sortedByDescending { it.date }.map { it.toResponse() }
-        else -> throw ModelNotFoundException("",0)
+        null -> toDoLists.sortedBy { it.date }
+        "1" -> toDoLists.sortedByDescending { it.date }
+        else -> throw IllegalStateException("")
       }
 
 
