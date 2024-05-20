@@ -19,11 +19,6 @@ class CommentController(
        return ResponseEntity.status(HttpStatus.OK).body(commentService.getComments(todoId))
     }
 
-    @GetMapping("/{commentId}")
-    fun getComment(@PathVariable todoId: Long,@PathVariable commentId: Long) : ResponseEntity<CommentResponse> {
-        return ResponseEntity.status(HttpStatus.OK).body(commentService.getCommentById(todoId, commentId))
-
-    }
     @PostMapping
     fun createComment(@PathVariable todoId: Long, @RequestBody createCommentRequest: CreateCommentRequest) : ResponseEntity<CommentResponse> {
         return ResponseEntity.status(HttpStatus.CREATED).body(commentService.getCreateComment(todoId,createCommentRequest))

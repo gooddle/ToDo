@@ -12,8 +12,11 @@ class ToDoController(
     private val toDoService: ToDoService
 ) {
     @GetMapping
-   fun getToDoList() : ResponseEntity<List<ToDoResponse>> {
-       return ResponseEntity.status(HttpStatus.OK).body(toDoService.getAllToDoList())
+   fun getToDoList(
+       @RequestParam(value = "name", required = false) name: String?,
+       @RequestParam(value = "orderBy", required = false) orderBy: String?,
+   ) : ResponseEntity<List<ToDoResponse>> {
+       return ResponseEntity.status(HttpStatus.OK).body(toDoService.getAllToDoList(orderBy,name))
    }
     @GetMapping("/{todoId}")
     fun getToDo(@PathVariable todoId : Long) : ResponseEntity<ToDoResponse> {
