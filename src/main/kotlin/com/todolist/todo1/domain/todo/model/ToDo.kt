@@ -2,6 +2,7 @@ package com.todolist.todo1.domain.todo.model
 
 
 import com.todolist.todo1.domain.comment.model.Comment
+import com.todolist.todo1.domain.comment.model.toResponse
 import com.todolist.todo1.domain.todo.dto.ToDoResponse
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -19,7 +20,7 @@ class ToDo(
     var description: String,
 
     @Column(name = "date", nullable = false)
-    val date: LocalDateTime = LocalDateTime.now(),
+    var date: LocalDateTime = LocalDateTime.now(),
 
     @Column(name = "status", nullable = false)
     var status : Boolean,
@@ -39,6 +40,9 @@ class ToDo(
     fun deleteComment(comment: Comment) {
         comments.remove(comment)
     }
+    fun done(newStatus: Boolean){
+        status = newStatus
+    }
 
 }
 
@@ -50,6 +54,7 @@ fun ToDo.toResponse(): ToDoResponse {
         name= name,
         description= description,
         date = date,
-        status = status
+        status = status,
+        comments = comments.map { it.toResponse() }
     )
 }

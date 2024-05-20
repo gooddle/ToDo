@@ -24,11 +24,6 @@ class CommentServicelmpl(
         return todo.comments.map{it.toResponse()}
     }
 
-    override fun getCommentById(todoId: Long, commentId: Long): CommentResponse {
-       val comment = commentRepository.findByTodoIdAndId(todoId, commentId) ?: throw ModelNotFoundException("Comment",todoId)
-        return comment.toResponse()
-    }
-
     @Transactional
     override fun getCreateComment(todoId: Long, request: CreateCommentRequest): CommentResponse {
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("ToDo",todoId)
@@ -38,11 +33,9 @@ class CommentServicelmpl(
             password = request.password,
             todo = todo,
         )
-
         todo.addComment(comment)
-        toDoRepository.save(todo)
-        val savedComment = commentRepository.save(comment)
-        return savedComment.toResponse()
+       commentRepository.save(comment)
+        return comment.toResponse()
     }
     @Transactional
     override fun getUpdateComment(todoId: Long, commentId: Long, request: UpdateCommentRequest): CommentResponse {
@@ -64,7 +57,7 @@ class CommentServicelmpl(
       val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("ToDo",todoId)
       val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("Comment",commentId)
       val (passwords,names) = request
-        if(passwords != comment.password|| names != comment.name){
+        if(passwords != comment.password || names != comment.name){
           throw IllegalStateException("아이디 혹은 비밀번호가 일치하지 않습니다.")
       }
         todo.deleteComment(comment)

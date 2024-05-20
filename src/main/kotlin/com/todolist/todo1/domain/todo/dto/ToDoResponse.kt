@@ -1,5 +1,6 @@
 package com.todolist.todo1.domain.todo.dto
 
+import com.todolist.todo1.domain.comment.dto.CommentResponse
 import java.time.LocalDateTime
 
 
@@ -8,6 +9,7 @@ data class ToDoResponse(
     val title: String?,
     val name: String,
     val description: String,
-    val date: LocalDateTime,
-    var status : Boolean
+    var date: LocalDateTime,
+    var status : Boolean,
+    var comments:List<CommentResponse>
 )

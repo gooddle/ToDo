@@ -6,22 +6,36 @@ import com.todolist.todo1.domain.todo.model.toResponse
 import com.todolist.todo1.domain.todo.repository.ToDoRepository
 import org.springframework.data.repository.findByIdOrNull
 import com.todolist.todo1.domain.todo.model.ToDo
+import jakarta.transaction.Transactional
 
 import org.springframework.stereotype.Service
+
 
 @Service
 class ToDoServicelmpl(
  private val toDoRepository: ToDoRepository
 ):ToDoService{
-    override fun getAllToDoList(): List<ToDoResponse> {
-        return toDoRepository.findAll().map { it.toResponse() }
+    override fun getAllToDoList(orderBy : String?,name : String?): List<ToDoResponse> {
+
+        val toDoLists = if(name.isNullOrEmpty()){
+           toDoRepository.findAll()
+       }else{
+           toDoRepository.findAll().filter { it.name == name }
+       }
+      return when(orderBy){
+        "1",null -> toDoLists.sortedBy { it.date }.map { it.toResponse() }
+        "2" -> toDoLists.sortedByDescending { it.date }.map { it.toResponse() }
+        else -> throw ModelNotFoundException("",0)
+      }
+
+
     }
 
     override fun getToDoById(todoId: Long): ToDoResponse {
         val todo = toDoRepository.findByIdOrNull(todoId)?: throw ModelNotFoundException("Todo", todoId)
         return todo.toResponse()
     }
-
+    @Transactional
     override fun createNewToDo(request: CreateToDoRequest): ToDoResponse {
         return toDoRepository.save(
           ToDo(
@@ -34,22 +48,16 @@ class ToDoServicelmpl(
 
     }
 
+    @Transactional
     override fun updateToDo(todoId: Long, request: UpdateToDoRequest): ToDoResponse {
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
         val (title, description) = request
-
         todo.title = title
         todo.description = description
-
-        when(request.status) {
-            true -> todo.status = true
-            false -> todo.status = false
-        }
-
-
+        todo.done(request.status)
         return toDoRepository.save(todo).toResponse()
     }
-
+    @Transactional
     override fun deleteToDo(todoId: Long) {
       val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
           toDoRepository.delete(todo)
