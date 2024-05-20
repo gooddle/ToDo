@@ -40,12 +40,10 @@ class CommentServicelmpl(
     @Transactional
     override fun getUpdateComment(todoId: Long, commentId: Long, request: UpdateCommentRequest): CommentResponse {
         val comment = commentRepository.findByTodoIdAndId(todoId,commentId) ?: throw ModelNotFoundException("Comment",todoId)
-        val(name,description)=request
-        val password = request.password
+        val(name,description,password)=request
         if(password != comment.password || name != comment.name){
             throw IllegalStateException("아이디 혹은 비밀번호가 일치하지 않습니다.")
         }
-
         comment.name = name
         comment.description = description
         return  commentRepository.save(comment).toResponse()
