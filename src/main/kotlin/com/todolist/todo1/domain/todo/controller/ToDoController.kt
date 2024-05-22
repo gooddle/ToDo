@@ -10,6 +10,7 @@ import org.springframework.data.web.PageableDefault
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
 
 
@@ -22,7 +23,7 @@ class ToDoController(
     @GetMapping
     fun getToDoList(
         @RequestParam(value = "name", required = false) name: String?,
-        @PageableDefault(page=0, size = 5, sort = ["date"]) pageable: Pageable
+        @PageableDefault(page=0, size = 5) pageable: Pageable
     ) : ResponseEntity<Page<ToDoResponse>> {
         return ResponseEntity.status(HttpStatus.OK).body(toDoService.getAllToDoList(name,pageable))
     }
@@ -32,14 +33,20 @@ class ToDoController(
         return ResponseEntity.status(HttpStatus.OK).body(toDoService.getToDoById(todoId))
     }
     @PostMapping
-    fun createToDo( @RequestBody @Valid createToDoRequest: CreateToDoRequest) : ResponseEntity<ToDoResponse>
-
+    fun createToDo( @RequestBody @Valid createToDoRequest: CreateToDoRequest,bindingResult:BindingResult) : ResponseEntity<ToDoResponse>
     {
+        if(bindingResult.hasErrors()){
+            throw IllegalStateException("")
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(toDoService.createNewToDo(createToDoRequest))
 
     }
     @PutMapping("/{todoId}")
-    fun  updateToDo(@PathVariable todoId: Long, @RequestBody  @Valid updateToDoRequest: UpdateToDoRequest) : ResponseEntity<ToDoResponse> {
+    fun  updateToDo(@PathVariable todoId: Long, @RequestBody  @Valid updateToDoRequest: UpdateToDoRequest,bindingResult: BindingResult) : ResponseEntity<ToDoResponse> {
+        if(bindingResult.hasErrors()){
+            throw IllegalStateException("")
+        }
+
         return ResponseEntity.status(HttpStatus.OK).body(toDoService.updateToDo(todoId, updateToDoRequest))
     }
     @DeleteMapping("/{todoId}")
