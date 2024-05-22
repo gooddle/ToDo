@@ -7,8 +7,8 @@ import com.todolist.todo1.domain.todo.repository.ToDoRepository
 import org.springframework.data.repository.findByIdOrNull
 import com.todolist.todo1.domain.todo.model.ToDo
 import jakarta.transaction.Transactional
-
-
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 
@@ -16,27 +16,18 @@ import org.springframework.stereotype.Service
 class ToDoServicelmpl(
  private val toDoRepository: ToDoRepository
 ):ToDoService{
-    override fun getAllToDoList(orderBy : String?,name : String?): List<ToDoResponse> {
-//        val todoLists = toDoRepository.findAll()
-//        if(name.isNullOrEmpty()){
-//            toDoRepository.findAll()
-//        }else{
-//            toDoRepository.findAll().filter { it.name==name }
-//        }
+        override fun getAllToDoList(name:String?,pageable: Pageable): Page<ToDoResponse> {
 
-        val toDoLists = if(name.isNullOrEmpty()){
-           toDoRepository.findAll().map{it.toResponse()}
-       }else{
-           toDoRepository.findAll().filter { it.name == name }.map{it.toResponse()}
-       }
-      return when(orderBy){
-        null -> toDoLists.sortedBy { it.date }
-        "1" -> toDoLists.sortedByDescending { it.date }
-        else -> throw IllegalStateException("")
-      }
+            return if(!name.isNullOrEmpty()){
+                toDoRepository.findByNameContainingIgnoreCase(name, pageable).map { it.toResponse() }
+            }
+            else {
+                toDoRepository.findAll(pageable).map { it.toResponse() }
+            }
 
 
-    }
+        }
+    
 
     override fun getToDoById(todoId: Long): ToDoResponse {
         val todo = toDoRepository.findByIdOrNull(todoId)?: throw ModelNotFoundException("Todo", todoId)
