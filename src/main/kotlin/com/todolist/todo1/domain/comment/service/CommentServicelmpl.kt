@@ -19,10 +19,6 @@ class CommentServicelmpl(
     private val commentRepository: CommentRepository,
     private val toDoRepository: ToDoRepository
 ):CommentService{
-    override fun getComments(todoId: Long): List<CommentResponse> {
-        val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("ToDo",todoId)
-        return todo.comments.map{it.toResponse()}
-    }
 
     @Transactional
     override fun getCreateComment(todoId: Long, request: CreateCommentRequest): CommentResponse {
