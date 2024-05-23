@@ -10,7 +10,8 @@
 
 
 # 2. Use Case Diagram
-![제목 없는 다이어그램 - draw io - Chrome 2024-05-16 오전 11_05_50](https://github.com/gooddle/ToDo/assets/128583844/439991b9-e039-4075-a3ee-56998c7a884b)
+
+![제목 없는 다이어그램 - draw io - Chrome 2024-05-23 오후 3_09_03](https://github.com/gooddle/ToDo/assets/128583844/f2782ab0-1828-4d6c-999b-48f9206de7b1)
 
 - Actor은 사용자를 의미하며 할일 카드를 작성
 
