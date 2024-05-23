@@ -40,8 +40,11 @@ class ToDo(
     fun deleteComment(comment: Comment) {
         comments.remove(comment)
     }
-    fun done(newStatus: Boolean){
-        status = newStatus
+    fun done(title: String, name: String,description: String, status: Boolean) {
+        this.title = title
+        this.name = name
+        this.description = description
+        this.status = status
     }
 
 
