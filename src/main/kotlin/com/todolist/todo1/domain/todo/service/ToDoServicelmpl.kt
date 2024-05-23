@@ -8,6 +8,7 @@ import org.springframework.data.repository.findByIdOrNull
 import com.todolist.todo1.domain.todo.model.ToDo
 import jakarta.transaction.Transactional
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 
 import org.springframework.data.domain.Pageable
 
@@ -19,7 +20,8 @@ class ToDoServicelmpl(
  private val toDoRepository: ToDoRepository
 ):ToDoService{
     override fun getAllToDoList(name:String?,pageable: Pageable): Page<ToDoResponse> {
-        return toDoRepository.findByNameOrFindAll(name, pageable).map { it.toResponse() }
+        val page =PageRequest.of(pageable.pageNumber, 5, pageable.sort)
+        return toDoRepository.findAllOrByName(name, page).map { it.toResponse() }
         }
 
     override fun getToDoById(todoId: Long): ToDoResponse {
