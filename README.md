@@ -37,7 +37,8 @@
 
 
 # 4. API 명세
-| Name     | URI(Resource)  | Method | Status Code |                                
+| Name     | URI(Resource)  | Method | Status Code |
+|--------- | -------------| -------------| -------------|
 | 할일 카드 작성 | /todo | POST | 201 |
 | 할일 카드 목록 조회 | /todo |  GET | 200 |
 | 선택한 할일 카드 조회 | /todo/{todoId} | GET | 200 |
