@@ -8,6 +8,7 @@ import org.springframework.data.repository.findByIdOrNull
 import com.todolist.todo1.domain.todo.model.ToDo
 import jakarta.transaction.Transactional
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
@@ -16,19 +17,17 @@ import org.springframework.stereotype.Service
 class ToDoServicelmpl(
  private val toDoRepository: ToDoRepository
 ):ToDoService{
-        override fun getAllToDoList(name:String?,pageable: Pageable): Page<ToDoResponse> {
+        override fun getAllToDoList(name:String?,pageable:Pageable): Page<ToDoResponse> {
+            val page:Pageable=PageRequest.of(pageable.pageNumber,5, pageable.sort)
 
             return if(!name.isNullOrEmpty()){
-                toDoRepository.findByNameContainingIgnoreCase(name, pageable).map { it.toResponse() }
+                toDoRepository.findByName(name, page).map { it.toResponse() }
             }
             else {
-                toDoRepository.findAll(pageable).map { it.toResponse() }
+                toDoRepository.findAll(page).map { it.toResponse() }
             }
 
-
         }
-    
-
     override fun getToDoById(todoId: Long): ToDoResponse {
         val todo = toDoRepository.findByIdOrNull(todoId)?: throw ModelNotFoundException("Todo", todoId)
         return todo.toResponse()
