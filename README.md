@@ -46,4 +46,4 @@
 | 선택한 할일 카드 삭제 | /todo/{todoId} | DELETE | 204 |
 | 댓글 작성 | /todo/{todoId}/comment | POST | 201 |
 |  댓글 수정 | /todo/{todoId}/comment/{commentId} |  PUT | 200 |
-| 댓글 삭 | /todo/{todoId}/comment/{commentId} | GET | 200 |
+| 댓글 삭제 | /todo/{todoId}/comment/{commentId} | GET | 200 |
