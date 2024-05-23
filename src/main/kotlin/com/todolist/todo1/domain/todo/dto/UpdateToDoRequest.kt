@@ -10,7 +10,7 @@ data class UpdateToDoRequest(
     val title: String,
     @field:NotBlank
     @field:Size(min = 1, max = 1000)
-    val description: String,
     var name : String,
+    val description: String,
     var status : Boolean
 )
