@@ -40,17 +40,12 @@
 | Name     | URI(Resource)  | Method | Status Code |                                
 | ---      | ---       |   
 | 할일 카드 작성 | /todo | POST | 201 |
-
+| ---      | ---       |   
 | 할일 카드 목록 조회 | /todo |  GET | 200 |
-
+| ---      | ---       |   
 | 선택한 할일 카드 조회 | /todo/{todoId} | GET | 200 |
-
+| ---      | ---       |   
 | 선택한 할일 카드 수정 | /todo/{todoId} | PUT | 200 |
-
+| ---      | ---       |   
 | 선택한 할일 카드 삭제 | /todo/{todoId} | DELETE | 204 |
 
-| 댓글 등록 | /todo/{todoId}/comment | POST | 201 |
-
-| 댓글 수정 | /todo/{todoId}/comment/{commentId} | PUT | 200 | 
-
-| 댓글 삭제 | /todo/{todoId}/comment/{commentId}| DELETE | 204 |
