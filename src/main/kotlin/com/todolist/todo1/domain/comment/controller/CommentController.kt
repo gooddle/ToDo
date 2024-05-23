@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.*
 class CommentController(
     private val commentService: CommentService
 ) {
-    @GetMapping
-    fun getCommentList(@PathVariable todoId: Long) : ResponseEntity<List<CommentResponse>> {
-       return ResponseEntity.status(HttpStatus.OK).body(commentService.getComments(todoId))
-    }
+
 
     @PostMapping
     fun createComment(@PathVariable todoId: Long, @RequestBody createCommentRequest: CreateCommentRequest) : ResponseEntity<CommentResponse> {

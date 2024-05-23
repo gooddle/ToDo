@@ -23,7 +23,7 @@ class ToDoController(
     @GetMapping
     fun getToDoList(
         @RequestParam(value = "name", required = false) name: String?,
-        @PageableDefault(page=0, size = 5) pageable: Pageable
+        @PageableDefault() pageable: Pageable
     ) : ResponseEntity<Page<ToDoResponse>> {
         return ResponseEntity.status(HttpStatus.OK).body(toDoService.getAllToDoList(name,pageable))
     }
