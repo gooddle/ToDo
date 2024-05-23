@@ -36,7 +36,7 @@ class ToDoController(
     fun createToDo( @RequestBody @Valid createToDoRequest: CreateToDoRequest,bindingResult:BindingResult) : ResponseEntity<ToDoResponse>
     {
         if(bindingResult.hasErrors()){
-            throw IllegalStateException("")
+            throw IllegalStateException("최소 1자에서 최대 200자 까지")
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(toDoService.createNewToDo(createToDoRequest))
 
@@ -44,7 +44,7 @@ class ToDoController(
     @PutMapping("/{todoId}")
     fun  updateToDo(@PathVariable todoId: Long, @RequestBody  @Valid updateToDoRequest: UpdateToDoRequest,bindingResult: BindingResult) : ResponseEntity<ToDoResponse> {
         if(bindingResult.hasErrors()){
-            throw IllegalStateException("")
+            throw IllegalStateException("최소 1자에서 최대 1000까지")
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(toDoService.updateToDo(todoId, updateToDoRequest))
