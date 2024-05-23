@@ -31,6 +31,6 @@
 - 할일 카드 삭제 시 관련 댓글 전부 삭제
 
 
-#3 ERD
+# 3. ERD
 
 ![ToDoController kt – postgres 2024-05-23 오후 2_54_42](https://github.com/gooddle/ToDo/assets/128583844/91406e00-8c3a-42bb-b6c8-eb0d12aafba0)
