@@ -45,7 +45,7 @@ class ToDoServicelmpl(
     override fun updateToDo(todoId: Long, request: UpdateToDoRequest): ToDoResponse {
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
         todo.done(request)
-        return toDoRepository.save(todo).toResponse()
+        return todo.toResponse()
     }
     @Transactional
     override fun deleteToDo(todoId: Long) {
