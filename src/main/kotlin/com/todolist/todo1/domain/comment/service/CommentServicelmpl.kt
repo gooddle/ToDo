@@ -42,7 +42,7 @@ class CommentServicelmpl(
         }
         comment.name = name
         comment.description = description
-        return  commentRepository.save(comment).toResponse()
+        return  comment.toResponse()
 
 
     }
