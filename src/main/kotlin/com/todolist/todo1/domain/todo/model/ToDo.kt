@@ -24,7 +24,7 @@ class ToDo(
     var date: LocalDateTime = LocalDateTime.now(),
 
     @Column(name = "status", nullable = false)
-    var status : Boolean,
+    var status : Boolean =false,
 
     @OneToMany(mappedBy = "todo", cascade = [(CascadeType.ALL)],orphanRemoval = true,fetch = FetchType.LAZY)
     var comments: MutableSet<Comment> = mutableSetOf(),
@@ -45,8 +45,8 @@ class ToDo(
         title = request.title
         name = request.name
         description = request.description
-        status = request.status
     }
+
 
 
 

@@ -1,6 +1,7 @@
 package com.todolist.todo1.domain.todo.service
 
 import com.todolist.todo1.domain.todo.dto.CreateToDoRequest
+import com.todolist.todo1.domain.todo.dto.FinishedToDoRequest
 import com.todolist.todo1.domain.todo.dto.ToDoResponse
 import com.todolist.todo1.domain.todo.dto.UpdateToDoRequest
 import org.springframework.data.domain.Page
@@ -13,4 +14,5 @@ interface ToDoService {
     fun createNewToDo(request: CreateToDoRequest):ToDoResponse
     fun updateToDo(todoId: Long,request: UpdateToDoRequest):ToDoResponse
     fun deleteToDo(todoId: Long)
+    fun finishedToDo(todoId: Long,request: FinishedToDoRequest): ToDoResponse?
 }
