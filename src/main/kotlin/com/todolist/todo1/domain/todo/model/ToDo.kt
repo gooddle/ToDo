@@ -4,6 +4,7 @@ package com.todolist.todo1.domain.todo.model
 import com.todolist.todo1.domain.comment.model.Comment
 import com.todolist.todo1.domain.comment.model.toResponse
 import com.todolist.todo1.domain.todo.dto.ToDoResponse
+import com.todolist.todo1.domain.todo.dto.UpdateToDoRequest
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -40,11 +41,11 @@ class ToDo(
     fun deleteComment(comment: Comment) {
         comments.remove(comment)
     }
-    fun done(title: String, name: String,description: String, status: Boolean) {
-        this.title = title
-        this.name = name
-        this.description = description
-        this.status = status
+    fun done(request : UpdateToDoRequest) {
+        title = request.title
+        name = request.name
+        description = request.description
+        status = request.status
     }
 
 
