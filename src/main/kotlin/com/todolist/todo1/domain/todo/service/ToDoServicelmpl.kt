@@ -52,9 +52,9 @@ class ToDoServicelmpl(
           toDoRepository.delete(todo)
     }
     @Transactional
-    override fun finishedToDo(todoId: Long,request: FinishedToDoRequest): ToDoResponse? {
+    override fun finishedToDo(todoId: Long): ToDoResponse {
        val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
-        todo.status =request.status
+       todo.is_done()
         return todo.toResponse()
     }
 
