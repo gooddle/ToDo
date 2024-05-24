@@ -46,7 +46,9 @@ class ToDo(
         name = request.name
         description = request.description
     }
-
+    fun is_done(){
+        status = true
+    }
 
 
 

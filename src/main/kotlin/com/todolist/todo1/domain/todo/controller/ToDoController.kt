@@ -54,7 +54,7 @@ class ToDoController(
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(toDoService.deleteToDo(todoId))
     }
     @PatchMapping("/{todoId}/finish")
-    fun finishToDo(@PathVariable todoId: Long,@RequestBody finishedToDoRequest: FinishedToDoRequest) : ResponseEntity<ToDoResponse> {
-        return ResponseEntity.status(HttpStatus.OK).body(toDoService.finishedToDo(todoId,finishedToDoRequest))
+    fun finishToDo(@PathVariable todoId: Long) : ResponseEntity<ToDoResponse> {
+        return ResponseEntity.status(HttpStatus.OK).body(toDoService.finishedToDo(todoId))
     }
 }
