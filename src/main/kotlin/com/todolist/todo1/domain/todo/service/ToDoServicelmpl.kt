@@ -54,7 +54,7 @@ class ToDoServicelmpl(
     @Transactional
     override fun finishedToDo(todoId: Long): ToDoResponse {
        val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
-       todo.is_done()
+       todo.isDone()
         return todo.toResponse()
     }
 
