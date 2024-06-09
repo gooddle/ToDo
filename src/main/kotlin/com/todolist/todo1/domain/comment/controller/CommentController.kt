@@ -18,18 +18,18 @@ class CommentController(
 
     @PostMapping
     fun createComment(@PathVariable todoId: Long, @RequestBody createCommentRequest: CreateCommentRequest) : ResponseEntity<CommentResponse> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(commentService.getCreateComment(todoId,createCommentRequest))
+        return ResponseEntity.status(HttpStatus.CREATED).body(commentService.createComment(todoId,createCommentRequest))
 
     }
     @PutMapping("/{commentId}")
     fun updateComment(@PathVariable todoId: Long,@PathVariable commentId: Long, @RequestBody updateCommentRequest: UpdateCommentRequest) : ResponseEntity<CommentResponse> {
         return ResponseEntity.status(HttpStatus.OK)
-            .body(commentService.getUpdateComment(todoId, commentId, updateCommentRequest))
+            .body(commentService.updateComment(todoId, commentId, updateCommentRequest))
 
     }
     @DeleteMapping("/{commentId}")
     fun deleteComment(@PathVariable todoId: Long,@PathVariable commentId: Long,@RequestBody deleteCommentRequest: DeleteCommentRequest) : ResponseEntity<Unit> {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(commentService.getDeleteComment(todoId, commentId,deleteCommentRequest))
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(commentService.deleteComment(todoId, commentId,deleteCommentRequest))
 
     }
 
