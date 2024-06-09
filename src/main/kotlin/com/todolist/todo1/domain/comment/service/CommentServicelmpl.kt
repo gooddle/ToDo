@@ -52,7 +52,7 @@ class CommentServiceImpl(
         val user = userRepository.findByEmail(userEmail.email) ?: throw ModelNotFoundException("User", 1)
 
         if (comment.user != user) {
-            throw IllegalStateException("You are not allowed to update this comment")
+            throw IllegalStateException("권한 없습니다.")
         }
         comment.name = request.name
         comment.description = request.description
@@ -72,7 +72,7 @@ class CommentServiceImpl(
         val user = userRepository.findByEmail(userEmail.email) ?: throw ModelNotFoundException("User", 1)
 
         if (comment.user != user) {
-            throw IllegalStateException("You are not allowed to update this comment")
+            throw IllegalStateException("권한 없습니다.")
         }
         todo.deleteComment(comment)
         toDoRepository.save(todo)

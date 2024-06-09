@@ -70,7 +70,7 @@ class ToDoServicelmpl(
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
 
         if (todo.user.id != user.id) {
-            throw ModelNotFoundException("Invalid token",1)
+            throw IllegalStateException("권한 없습니다.")
         }
 
         todo.done(request)
@@ -87,7 +87,7 @@ class ToDoServicelmpl(
         val user = userRepository.findByEmail(userEmail.email) ?: throw ModelNotFoundException("User", null)
 
         if (todo.user.id != user.id) {
-            throw ModelNotFoundException("Invalid token",1)
+            throw IllegalStateException("권한 없습니다.")
         }
         toDoRepository.delete(todo)
     }
