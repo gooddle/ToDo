@@ -64,8 +64,16 @@ class CommentServiceImpl(
     @Transactional
     override fun deleteComment(todoId: Long, commentId: Long, request: DeleteCommentRequest) {
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("ToDo", todoId)
+
         val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("Comment", commentId)
 
+        val userEmail = SecurityContextHolder.getContext().authentication.principal as UserPrincipal
+
+        val user = userRepository.findByEmail(userEmail.email) ?: throw ModelNotFoundException("User", 1)
+
+        if (comment.user != user) {
+            throw IllegalStateException("You are not allowed to update this comment")
+        }
         todo.deleteComment(comment)
         toDoRepository.save(todo)
     }
