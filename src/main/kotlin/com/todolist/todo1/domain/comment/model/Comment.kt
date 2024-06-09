@@ -2,6 +2,8 @@ package com.todolist.todo1.domain.comment.model
 
 import com.todolist.todo1.domain.comment.dto.CommentResponse
 import com.todolist.todo1.domain.todo.model.ToDo
+
+import com.todolist.todo1.domain.user.model.User
 import jakarta.persistence.*
 
 @Entity
@@ -10,14 +12,17 @@ class Comment(
 
     @Column(name = "name", nullable = false)
     var name: String,
+
     @Column(name = "description", nullable = false)
     var description: String,
-    @Column(name = "password", nullable = false)
-    var password: String,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "todo_id")
-    var todo : ToDo
+    var todo : ToDo,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    var user: User
 
 
 ) {
@@ -32,5 +37,6 @@ fun Comment.toResponse(): CommentResponse {
         id =id!!,
         name = name,
         description = description,
+
     )
 }
