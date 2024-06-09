@@ -81,13 +81,22 @@ class ToDoServicelmpl(
     @Transactional
     override fun deleteToDo(todoId: Long){
         val authentication = SecurityContextHolder.getContext().authentication
-        authentication.principal as UserPrincipal
+        val userEmail=authentication.principal as UserPrincipal
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
+
+        val user = userRepository.findByEmail(userEmail.email) ?: throw ModelNotFoundException("User", null)
+
+        if (todo.user.id != user.id) {
+            throw ModelNotFoundException("Invalid token",1)
+        }
         toDoRepository.delete(todo)
     }
 
     @Transactional
     override fun finishedToDo(todoId: Long): ToDoResponse {
+
+
+
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
         todo.isDone()
         return todo.toResponse()
