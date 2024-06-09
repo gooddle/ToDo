@@ -7,7 +7,6 @@ import jakarta.validation.Valid
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
-
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/todo")
 @RestController
 class ToDoController(
-    private val toDoService: ToDoService
+    private val toDoService: ToDoService,
 ) {
     @GetMapping
     fun getToDoList(
@@ -32,6 +31,7 @@ class ToDoController(
     fun getToDo(@PathVariable todoId : Long) : ResponseEntity<ToDoResponse> {
         return ResponseEntity.status(HttpStatus.OK).body(toDoService.getToDoById(todoId))
     }
+
     @PostMapping
     fun createToDo( @RequestBody @Valid createToDoRequest: CreateToDoRequest,bindingResult:BindingResult) : ResponseEntity<ToDoResponse>
     {
@@ -57,4 +57,7 @@ class ToDoController(
     fun finishToDo(@PathVariable todoId: Long) : ResponseEntity<ToDoResponse> {
         return ResponseEntity.status(HttpStatus.OK).body(toDoService.finishedToDo(todoId))
     }
+
+
+
 }

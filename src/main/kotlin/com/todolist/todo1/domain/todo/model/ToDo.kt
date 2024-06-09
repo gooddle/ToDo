@@ -5,11 +5,12 @@ import com.todolist.todo1.domain.comment.model.Comment
 import com.todolist.todo1.domain.comment.model.toResponse
 import com.todolist.todo1.domain.todo.dto.ToDoResponse
 import com.todolist.todo1.domain.todo.dto.UpdateToDoRequest
+import com.todolist.todo1.domain.user.model.User
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "todolist")
+@Table(name = "todocard")
 class ToDo(
     @Column(name ="title", nullable = false)
     var title: String,
@@ -28,6 +29,12 @@ class ToDo(
 
     @OneToMany(mappedBy = "todo", cascade = [(CascadeType.ALL)],orphanRemoval = true,fetch = FetchType.LAZY)
     var comments: MutableSet<Comment> = mutableSetOf(),
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    var user: User
+
+
 
 
     ) {
