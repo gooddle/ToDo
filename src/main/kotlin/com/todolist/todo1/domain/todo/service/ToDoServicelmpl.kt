@@ -8,7 +8,6 @@ import org.springframework.data.repository.findByIdOrNull
 import com.todolist.todo1.domain.todo.model.ToDo
 import com.todolist.todo1.domain.user.repository.UserRepository
 import com.todolist.todo1.infra.security.UserPrincipal
-import com.todolist.todo1.infra.security.jwt.JwtPlugin
 import jakarta.transaction.Transactional
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
