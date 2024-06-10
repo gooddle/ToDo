@@ -36,13 +36,8 @@ class ToDoServicelmpl(
 
     @Transactional
     override fun createNewToDo(request: CreateToDoRequest): ToDoResponse {
-        val authentication = SecurityContextHolder.getContext().authentication
-
-        val userEmail = authentication.principal as UserPrincipal
-
-
+        val userEmail = SecurityContextHolder.getContext().authentication.principal as UserPrincipal
         val user = userRepository.findByEmail(userEmail.email) ?: throw ModelNotFoundException("User", null)
-
         return toDoRepository.save(
             ToDo(
                 title = request.title,
@@ -57,22 +52,12 @@ class ToDoServicelmpl(
 
     @Transactional
     override fun updateToDo(todoId: Long, request: UpdateToDoRequest): ToDoResponse {
-
-
-        val authentication = SecurityContextHolder.getContext().authentication
-
-        val userEmail = authentication.principal as UserPrincipal
-
-
+        val userEmail = SecurityContextHolder.getContext().authentication.principal as UserPrincipal
         val user = userRepository.findByEmail(userEmail.email) ?: throw ModelNotFoundException("User", null)
-
-
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
-
         if (todo.user.id != user.id) {
             throw IllegalStateException("권한 없습니다.")
         }
-
         todo.done(request)
         return todo.toResponse()
     }
@@ -81,29 +66,22 @@ class ToDoServicelmpl(
     @Transactional
     override fun deleteToDo(todoId: Long){
         val userEmail = SecurityContextHolder.getContext().authentication.principal as UserPrincipal
-
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
-
         val user = userRepository.findByEmail(userEmail.email) ?: throw ModelNotFoundException("User", null)
-
         if (todo.user.id != user.id) {
             throw IllegalStateException("권한 없습니다.")
         }
         toDoRepository.delete(todo)
     }
 
+
+
     @Transactional
     override fun finishedToDo(todoId: Long): ToDoResponse {
-
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
         todo.isDone()
         return todo.toResponse()
     }
-
-
-
-
-
 
 
 }
