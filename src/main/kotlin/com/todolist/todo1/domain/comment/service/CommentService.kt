@@ -9,5 +9,6 @@ interface CommentService {
     fun createComment(todoId: Long,request: CreateCommentRequest) : CommentResponse
     fun updateComment(todoId: Long, commentId : Long,request: UpdateCommentRequest  ) : CommentResponse
     fun deleteComment(todoId: Long, commentId : Long,request: DeleteCommentRequest)
+    fun deleteCommentByAdmin(todoId: Long, commentId : Long)
 
 }

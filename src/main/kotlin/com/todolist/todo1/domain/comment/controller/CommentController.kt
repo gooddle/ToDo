@@ -7,6 +7,7 @@ import com.todolist.todo1.domain.comment.dto.UpdateCommentRequest
 import com.todolist.todo1.domain.comment.service.CommentService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/todo/{todoId}/comment")
@@ -31,6 +32,11 @@ class CommentController(
     fun deleteComment(@PathVariable todoId: Long,@PathVariable commentId: Long,@RequestBody deleteCommentRequest: DeleteCommentRequest) : ResponseEntity<Unit> {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(commentService.deleteComment(todoId, commentId,deleteCommentRequest))
 
+    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/{commentId}/admin")
+    fun deleteCommentByAdmin(@PathVariable todoId: Long,@PathVariable commentId: Long) : ResponseEntity<Unit> {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(commentService.deleteCommentByAdmin(todoId, commentId))
     }
 
 }

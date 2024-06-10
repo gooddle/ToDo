@@ -77,4 +77,24 @@ class CommentServiceImpl(
         todo.deleteComment(comment)
         toDoRepository.save(todo)
     }
+
+    @Transactional
+    override fun deleteCommentByAdmin(todoId: Long, commentId: Long) {
+        val userEmail = SecurityContextHolder.getContext().authentication.principal as UserPrincipal
+        val user = userRepository.findByEmail(userEmail.email) ?: throw ModelNotFoundException("User", 1)
+
+        if (user.role.name != "ADMIN") {
+            throw IllegalStateException("권한 없습니다.")
+        }
+
+
+        val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("ToDo", todoId)
+        val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("Comment", commentId)
+
+        todo.deleteComment(comment)
+        toDoRepository.save(todo)
+    }
+
+
+
 }
