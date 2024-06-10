@@ -14,4 +14,5 @@ interface ToDoService {
     fun updateToDo(todoId: Long,request: UpdateToDoRequest):ToDoResponse
     fun deleteToDo(todoId: Long)
     fun finishedToDo(todoId: Long): ToDoResponse
+    fun deleteByAdmin(todoId: Long)
 }
