@@ -80,9 +80,8 @@ class ToDoServicelmpl(
 
     @Transactional
     override fun deleteToDo(todoId: Long){
-        val authentication = SecurityContextHolder.getContext().authentication
+        val userEmail = SecurityContextHolder.getContext().authentication.principal as UserPrincipal
 
-        val userEmail=authentication.principal as UserPrincipal
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
 
         val user = userRepository.findByEmail(userEmail.email) ?: throw ModelNotFoundException("User", null)
@@ -96,8 +95,6 @@ class ToDoServicelmpl(
     @Transactional
     override fun finishedToDo(todoId: Long): ToDoResponse {
 
-
-
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
         todo.isDone()
         return todo.toResponse()
@@ -105,9 +102,11 @@ class ToDoServicelmpl(
 
     @Transactional
     override fun deleteByAdmin(todoId: Long) {
-        val authentication = SecurityContextHolder.getContext().authentication
-        val userEmail=authentication.principal as UserPrincipal
+        val userEmail = SecurityContextHolder.getContext().authentication.principal as UserPrincipal
+
+
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
+
         val user = userRepository.findByEmail(userEmail.email) ?: throw ModelNotFoundException("User", null)
 
         if (user.role.name != "ADMIN") {
