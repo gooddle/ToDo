@@ -81,6 +81,7 @@ class ToDoServicelmpl(
     @Transactional
     override fun deleteToDo(todoId: Long){
         val authentication = SecurityContextHolder.getContext().authentication
+
         val userEmail=authentication.principal as UserPrincipal
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
 
@@ -100,6 +101,21 @@ class ToDoServicelmpl(
         val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
         todo.isDone()
         return todo.toResponse()
+    }
+
+    @Transactional
+    override fun deleteByAdmin(todoId: Long) {
+        val authentication = SecurityContextHolder.getContext().authentication
+        val userEmail=authentication.principal as UserPrincipal
+        val todo = toDoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
+        val user = userRepository.findByEmail(userEmail.email) ?: throw ModelNotFoundException("User", null)
+
+        if (user.role.name != "ADMIN") {
+            throw IllegalStateException("권한 없습니다.")
+        }
+
+        toDoRepository.delete(todo)
+
     }
 
 
