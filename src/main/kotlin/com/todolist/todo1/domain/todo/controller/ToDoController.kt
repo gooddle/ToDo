@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
 
@@ -53,6 +54,9 @@ class ToDoController(
     fun deleteToDo(@PathVariable todoId : Long) : ResponseEntity<Unit> {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(toDoService.deleteToDo(todoId))
     }
+
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{todoId}/finish")
     fun finishToDo(@PathVariable todoId: Long) : ResponseEntity<ToDoResponse> {
         return ResponseEntity.status(HttpStatus.OK).body(toDoService.finishedToDo(todoId))
