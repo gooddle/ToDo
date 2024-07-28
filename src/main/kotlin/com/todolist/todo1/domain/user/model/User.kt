@@ -18,7 +18,8 @@ class User(
     @Column(name = "role", nullable = false)
     val role : UserRole,
 
-
+    @Column(name = "oauthProvider", nullable = false)
+    var oauthProvider :String? = null
 
 
 
@@ -35,6 +36,7 @@ class User(
             role = role.name
         )
     }
+
 
 
 

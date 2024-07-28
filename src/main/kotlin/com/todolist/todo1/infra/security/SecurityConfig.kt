@@ -28,6 +28,8 @@ class SecurityConfig(
             .authorizeHttpRequests {
                 it.requestMatchers(
                     "/login",
+                    "/kakao",
+                    "/kakao/callback",
                     "/signup",
                     "/logout",
                     "/swagger-ui/**",

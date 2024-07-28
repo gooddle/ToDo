@@ -7,7 +7,8 @@ data class UserPrincipal(
     val id: Long,
     val email: String,
     val authorities: Collection<GrantedAuthority>
-) {
+)
+{
     constructor(id: Long, email: String, roles: Set<String>) : this(
         id,
         email,

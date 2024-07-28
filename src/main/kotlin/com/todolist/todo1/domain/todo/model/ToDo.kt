@@ -36,7 +36,6 @@ class ToDo(
 
 
 
-
     ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

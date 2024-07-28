@@ -3,11 +3,12 @@ package com.todolist.todo1.infra.security.jwt
 import com.todolist.todo1.infra.security.UserPrincipal
 import org.springframework.security.authentication.AbstractAuthenticationToken
 import org.springframework.security.web.authentication.WebAuthenticationDetails
+import java.io.Serializable
 
 class JwtAuthenticationToken(
     private val principal: UserPrincipal,
     detail : WebAuthenticationDetails,
-): AbstractAuthenticationToken(principal.authorities) {
+): AbstractAuthenticationToken(principal.authorities), Serializable {
 
     init {
         super.setAuthenticated(true)
